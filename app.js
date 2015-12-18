@@ -5,8 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
+var videostore = require('./routes/videostore');
+var index = require('./routes/index');
 var users = require('./routes/users');
+var home = require('./routes/home');
+var myvideo = require('./routes/myvideo');
+var mypage = require('./routes/mypage');
 
 var app = express();
 
@@ -28,8 +32,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.get('/videostore', videostore);
+app.get('/index', index);
+app.get('/users', users);
+app.get('/mypage', mypage);
+app.get('/myvideo', myvideo);
+app.get('/', home);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -63,4 +71,5 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;
+app.listen(3000);
+//module.exports = app;
