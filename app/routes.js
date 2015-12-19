@@ -54,6 +54,18 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.get('/myvideo', function(req, res) {
+	res.render('myvideo.ejs', {
+		user : req.user // get the user out of session and pass to template
+		});
+	});
+
+	app.get('/videostore', function(req, res) {
+	res.render('videostore.ejs', {
+		user : req.user // get the user out of session and pass to template
+		});
+	});
+
 
 	// =====================================
 	// LOGOUT ==============================
