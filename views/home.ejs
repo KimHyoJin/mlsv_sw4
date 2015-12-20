@@ -6,7 +6,9 @@
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
     
     <link rel="stylesheet" href="css/home/normalize.css">
-        <link rel="stylesheet" href="css/home/home.css">
+    <link rel="stylesheet" href="css/home/home.css">
+    <!--<link href="css/uploadvideo/bootstrap.min.css" rel="stylesheet">-->
+
   </head>
 
   <body>
@@ -23,26 +25,18 @@
           <h1>Sign Up for Free</h1>
           
             <% if (message.length > 0) { %>
-              <div class="alert alert-danger"><%= message %></div>
+              <h3 style="color:white"><%= message %></h3>
             <% } %>
 
           <form action="/signup" method="post">
           
-          <div class="top-row">
+          
             <div class="field-wrap">
               <label>
-                First Name<span class="req">*</span>
+                Name<span class="req">*</span>
               </label>
-              <input type="text" required autocomplete="off" name="userName" />
+              <input type="text"required autocomplete="off" name="userName" />
             </div>
-        
-            <div class="field-wrap">
-              <label>
-                Last Name<span class="req">*</span>
-              </label>
-              <input type="text"required autocomplete="off"/>
-            </div>
-          </div>
 
           <div class="field-wrap">
             <label>
@@ -67,24 +61,24 @@
         <div id="login">   
           <h1>Welcome Back!</h1>
           
-          <% if (message.length > 0) { %>
-              <div class="alert alert-danger"><%= message %></div>
+          <% if (message2.length > 0) { %>
+              <h3 style="color:white"><%= message2%></h3>
           <% } %>
 
-          <form action="/login" method="post">
+          <form action="/signin" method="post">
           
           <div class="field-wrap">
             <label>
               Email Address<span class="req">*</span>
             </label>
-            <input type="email"required autocomplete="off" name="email"/>
+            <input type="email"required autocomplete="off" name="email" id="email"/>
           </div>
           
           <div class="field-wrap">
             <label>
               Password<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off" name="password"/>
+            <input type="password"required autocomplete="off" name="password" id="password"/>
           </div>
           
           <p class="forgot"><a href="#">Forgot Password?</a></p>

@@ -79,16 +79,19 @@
                   
                     <ul class="nav navbar-nav navbar-right">
                       <li>
-                        <a href="#"><i class="glyphicon glyphicon-home"></i>Upload Video </a>
+                        <a href="#"><i class="glyphicon glyphicon-home"></i>반갑습니다. <%= user['userName'] %> 님</a>
                       </li>
                       <li>
-                        <a href="#"><i class="glyphicon glyphicon-home"></i>My Video </a>
+                        <a href="/logout"><i class="glyphicon glyphicon-home"></i>LogOut </a>
+                      </li>
+                      <li>
+                        <a href="/uploadvideo"><i class="glyphicon glyphicon-home"></i>Upload Video </a>
+                      </li>
+                      <li>
+                        <a href="/myvideo"><i class="glyphicon glyphicon-home"></i>My Video </a>
                       </li>
                       <li>
                         <a href="/videostore"><i class="glyphicon glyphicon-home"></i>Video Store </a>
-                      </li>
-                      <li>
-                        <a href="#"><i class="glyphicon glyphicon-home"></i>Mypage </a>
                       </li>
                     </ul>
                     </nav>
@@ -108,6 +111,33 @@
     <input type="file" name="thumbnail">
     <input type="submit">-->
 
+<!--<div id="fileControl">
+<input type="file" name="uploadFile" onchange="isFileNameLength(this)"/>
+</div>
+<script type="text/javascript">
+ 
+/**
+* 파일명 길이를 체크하여 50자가 넘으면 객체를 새로 생성하여 초기화한다.
+* @param input 객체
+*/
+function isFileNameLength(input) {
+//선택한 파일명
+var value = input.value;
+//선택한 파일명의 길이가 50자가 넘는다면
+if (value.length > 50) {
+//알림 메세지
+alert("현재 선택하신 파일명은 50자가 넘습니다.\n50자 이하인 파일명으로 다시 선택 해 주십시요.");
+//객체를 다시 생성
+var newInput = document.createElement('<input type="file" name="uploadFile" onchange="isFileNameLength(this);"/>');
+//파일컨트롤 영역 초기화
+document.getElementById("fileControl").innerHTML = "";
+//파일컨트롤 div에 새로 생성한 객체를 넣어준다.
+//이 방법이 아니면 기존에 선택된 파일명 / 파일을 제거 할 수 없다.
+document.getElementById("fileControl").appendChild(newInput);
+}
+}
+</script>-->
+
 
                               <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -115,18 +145,35 @@
                                 </div>
                                   <div class="panel-body" align="left">
                                       <div class-"panel panel-default">
-                                        <!--<form method="post" enctype="multipart/form-data" action="/fileupload" align = "right">
+                                        <form method="post" enctype="multipart/form-data" action="/upload" align = "right">
                                          <div class="row">
-                                         <h4 class="col-sm-6">선택된 파일명이 없습니다</h4>
-                                          <span class="btn btn-default btn-file" align="right">Browse <input type="file" name = "thumbnail"></span>
-                                          <a href="/myvideo"><span class="btn btn-default btn-file" align="right">Submit </span></a>
+                                         <!--<div id="filenames">-->
+                                          <h4 class="col-sm-6" align="left" id="filenames">선택된 파일명이 없습니다</h4>
+                                         <!--</div>-->
+                                          <span class="btn btn-default btn-file" align="right">Browse <input type="file" accept="video/mp4, video/*" name = "fileupload"  onchange="reviewUploadImg(this);"></span>
+                                            <script type="text/javascript">
+                                          function reviewUploadImg(fileObj)
+                                            {
+                                             var filePath = fileObj.value;
+                                             var fileName = filePath.substring(filePath.lastIndexOf("\\")+1);
+                                             //alert(fileName);
+                                             document.getElementById("filenames").innerHTML = fileName;
+                                             
+                                            }
+                                            </script>
+
+
+                                          <button type="submit" style="background-color:transparent" >
+                                            <span class="btn btn-default btn-file" align="right">Submit</span>
+                                          </button>
+                                          
                                           </div>
-                                        </form>-->
-                                          <form action="/upload" method="POST" enctype="multipart/form-data">
+                                        </form>
+                                          <!--<form action="/upload" method="POST" enctype="multipart/form-data">
                                           Select an image to upload:
                                           <input type="file" name="fileupload"> 
                                           <input type="submit">
-                                        </form>
+                                        </form>-->
                                       </div>
                                   </div>
                               </div>

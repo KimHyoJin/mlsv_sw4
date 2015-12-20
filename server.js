@@ -18,8 +18,6 @@ var flash    = require('connect-flash');
 var busboy = require('connect-busboy');
 var fs = require('fs');
 
-
-
 // configuration ===============================================================
 // connect to our database
 

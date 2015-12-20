@@ -23,6 +23,10 @@ hr {
   border-color:#dedede;
 }
 
+button{
+  border:none !important;
+}
+
 .wrapper, .row {
    height: 100%;
    margin-left:0;

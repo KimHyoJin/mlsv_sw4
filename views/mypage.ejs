@@ -1,5 +1,227 @@
-<b>mypage</b>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>My Little ShareVideo - My Video</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/uploadvideo/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/uploadvideo/styles.css" rel="stylesheet">
 
-<% if(user) { %>
-	<h3 class="section-subheading text-muted">반갑습니다! <%= user.userName %> 님</h3>
-<% } %>
+    <style type="text/css">
+      table{
+        text-align: center;
+      }
+    </style>
+
+  </head>
+  <body>
+   <script type="text/javascript">
+          var socket = io.connect('http://localhost:3000');
+          $('#changename').click(function(){
+              socket.emit('changename',{nickname:$('#nickname').val()});
+          });
+          $("#msgbox").keyup(function(event) {
+              if (event.which == 13) {
+                  socket.emit('send_msg',{to:$('#to').val(),msg:$('#msgbox').val()});
+                  $('#msgbox').val('');
+              }
+          });
+          socket.on('new',function(data){
+              console.log(data.nickname);
+              $('#nickname').val(data.nickname);
+          });
+   
+          // 새로운 사용자가 들어오거나, 사용자가 이름을 바꿨을때 "To" 리스트를 변경함
+          socket.on('userlist',function(data){
+              var users = data.users;
+              console.log(users);
+              console.log(data.users.length);
+              $('#to').empty().append('<option value="ALL">ALL</option>');
+              for(var i=0;i<data.users.length;i++){
+                  $('#to').append('<option value="'+users[i]+'">'+users[i]+"</option>");
+              }
+          });
+   
+          socket.on('broadcast_msg',function(data){
+              console.log(data.msg);
+              $('#msgs').append(data.msg+'<BR>');
+          });
+      </script>
+
+
+
+<div class="wrapper">
+    <div class="box">
+        <div class="row row-offcanvas row-offcanvas-left">
+            <!-- main right col -->
+            <div class="full col-sm-9" id="main">
+                
+                <!-- top nav -->
+                <div class="navbar navbar-blue navbar-static-top" >  
+
+                    <div class="navbar-header">
+                      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                      <!--<a href="/" class="navbar-brand logo">b</a>-->
+                    </div>
+                    
+                    <nav class="collapse navbar-collapse" role="navigation">
+                    <form class="nav navbar-nav navbar-left title">
+                        <!--<div class="input-group input-group-sm" style="max-width:360px;">
+                          <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                          <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                          </div>
+                        </div>-->
+                          <li>
+                        <a href="/mypage"><i class="glyphicon glyphicon-home"></i>My Little Share Video </a>
+                      </li>
+                    </form>
+                  
+                    <ul class="nav navbar-nav navbar-right">
+                      <li>
+                        <a href="#"><i class="glyphicon glyphicon-home"></i>반갑습니다. <%= user['userName'] %> 님</a>
+                      </li>
+                      <li>
+                        <a href="/logout"><i class="glyphicon glyphicon-home"></i>LogOut </a>
+                      </li>
+                      <li>
+                        <a href="/uploadvideo"><i class="glyphicon glyphicon-home"></i>Upload Video </a>
+                      </li>
+                      <li>
+                        <a href="/myvideo"><i class="glyphicon glyphicon-home"></i>My Video </a>
+                      </li>
+                      <li>
+                        <a href="/videostore"><i class="glyphicon glyphicon-home"></i>Video Store </a>
+                      </li>
+                    </ul>
+                    </nav>
+                </div>
+                <!-- /top nav -->
+              
+                <div class="padding">
+                    <div class="full col-sm-9">
+                      
+                        <!-- content -->                      
+                        <div class="row">
+                          
+                         <!-- main col left --> 
+                         <div class="col-sm-12 center">
+                        
+                              <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <h4>친구 목록</h4>
+                                </div>
+                                  <div class="panel-body" align="center">
+                                      <div class-"panel panel-default">
+                                        <table class="table table-striped">
+                                          <% if(result) { %>
+                                          <tr>
+                                            <th>이메일</th>
+                                            <th>친구가 된시간</th>
+                                          </tr>
+                                          <% for(key in result) { %>
+                                            <tr> <td> <%= result[key]['user2'] %></td> <td> <%= result[key]['time'] %></td> </tr>
+                                          <%}%>
+                                          
+
+                                          <% } else { %>
+                                            <h3>아직 친구가 없습니다.</h3>
+                                          <% } %>
+
+                                        </table>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <h4>친구 추가</h4>
+                                </div>
+                                  <div class="panel-body" align="center">
+                                      <div class-"panel panel-default">
+                                         <form class="form-inline" action="/addFriend" method="post">
+                                          <div class="form-group" align="center">
+                                            <input type="text" class="form-control","col-sm-10" placeholder="abc@example" name="friendEmail">
+                                          </div>
+                                          <button type="submit" class="btn btn-default">친구 추가</button>
+                                        </form>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <h4>채팅 기록</h4>
+                                </div>
+                                  <div class="panel-body" align="center">
+                                      <div class-"panel panel-default">
+                                        <table class="table table-striped">
+                                         
+                                          <tr>
+                                            <th>친구</th>
+                                            <th>비디오명</th>
+                                            <th>채팅 시간</th>
+                                          </tr>
+
+                                        </table>
+                                      </div>
+                                  </div>
+                              </div>
+
+                          </div>
+                          
+                          <!-- main col right -->
+                          
+                       </div><!--/row-->
+                           
+                    </div><!-- /col-9 -->
+                </div><!-- /padding -->
+            </div>
+            <!-- /main -->
+          
+        </div>
+    </div>
+</div>
+
+
+<!--post modal-->
+<div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">aa</button>
+      Update Status
+      </div>
+      <div class="modal-body">
+          <form class="form center-block">
+            <div class="form-group">
+              <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+          <div>
+          <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+            <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+      </div>  
+      </div>
+  </div>
+  </div>
+</div>
+
+  <!-- script references -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="javascripts/uploadvideo/bootstrap.min.js"></script>
+    <script src="javascripts/uploadvideo/scripts.js"></script>
+  </body>
+</html>
