@@ -72,6 +72,25 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	
+	//
+	var fs = require('fs');
+
+	app.post('/upload', function(req, res) {
+	    var fstream;
+	    req.pipe(req.busboy);
+	    req.busboy.on('file', function (fieldname, file, filename) {
+	        console.log("Uploading: " + filename); 
+	        fstream = fs.createWriteStream(__dirname + '/files/' + filename);
+	       	console.log("Uploading finish: " + filename); 
+
+	        file.pipe(fstream);
+	        fstream.on('close', function () {
+	            res.redirect('back');
+	        });
+
+	    });
+	});
 
 	// =====================================
 	// LOGOUT ==============================

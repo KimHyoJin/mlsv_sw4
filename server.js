@@ -14,12 +14,16 @@ var port     = process.env.PORT || 3000;
 var passport = require('passport');
 var flash    = require('connect-flash');
 
+//
+var busboy = require('connect-busboy');
+var fs = require('fs');
+
+
+
 // configuration ===============================================================
 // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
-
-
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -42,6 +46,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
+//
+app.use(busboy()); 
 
 
 // routes ======================================================================

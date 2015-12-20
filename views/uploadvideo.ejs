@@ -115,12 +115,17 @@
                                 </div>
                                   <div class="panel-body" align="left">
                                       <div class-"panel panel-default">
-                                        <form method="post" enctype="multipart/form-data" action="/fileupload" align = "right">
+                                        <!--<form method="post" enctype="multipart/form-data" action="/fileupload" align = "right">
                                          <div class="row">
-                                         <h4 class="col-sm-6" align ="left">선택된 파일명이 없습니다</h4>
-                                          <span class="btn btn-default btn-file", "col-sm-6" align="right">Browse <input type="file" name = "thumbnail"></span>
+                                         <h4 class="col-sm-6">선택된 파일명이 없습니다</h4>
+                                          <span class="btn btn-default btn-file" align="right">Browse <input type="file" name = "thumbnail"></span>
                                           <a href="/myvideo"><span class="btn btn-default btn-file" align="right">Submit </span></a>
                                           </div>
+                                        </form>-->
+                                          <form action="/upload" method="POST" enctype="multipart/form-data">
+                                          Select an image to upload:
+                                          <input type="file" name="fileupload"> 
+                                          <input type="submit">
                                         </form>
                                       </div>
                                   </div>
