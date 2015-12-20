@@ -94,6 +94,7 @@ hr {
     width:inherit;
 }
 
+
 .navbar-blue li > a,.navbar-toggle  {
    color:#efefef;
 }
@@ -119,7 +120,7 @@ hr {
 
 #sidebar {
     padding:0px;
-	padding-top:15px;
+	 padding-top:15px;
 }
 
 #sidebar, #sidebar a, #sidebar-footer a {
